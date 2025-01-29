@@ -1,12 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lector NFC y Redirección a Google Maps</title>
+    <!-- Incluir Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
-<body>
-    <h1>Lector NFC y Redirección a Google Maps</h1>
-    <button id="scanButton">Escanear NFC</button>
-    <p id="output"></p>
+<body class="bg-light">
+
+    <div class="container mt-5">
+        <div class="card p-4 shadow-sm">
+            <h1 class="text-center mb-4">Lector NFC y Redirección a Google Maps</h1>
+            <div class="text-center">
+                <button id="scanButton" class="btn btn-primary btn-lg">Escanear NFC</button>
+            </div>
+            <p id="output" class="mt-3 text-center text-muted"></p>
+        </div>
+    </div>
 
     <script>
         const scanButton = document.getElementById('scanButton');
@@ -17,6 +29,8 @@
                 const reader = new NDEFReader();
                 await reader.scan();
                 output.textContent = "Escaneando NFC...";
+                output.classList.remove('text-muted');
+                output.classList.add('text-info');
 
                 reader.onreading = async event => {
                     // Obtener la ubicación en tiempo real
@@ -31,6 +45,8 @@
                 };
             } catch (error) {
                 output.textContent = `Error: ${error.message}`;
+                output.classList.remove('text-muted');
+                output.classList.add('text-danger');
             }
         });
 
@@ -44,5 +60,6 @@
             });
         }
     </script>
+
 </body>
 </html>
