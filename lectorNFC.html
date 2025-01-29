@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lector NFC y Geolocalización 2</title>
+    <title>Lector NFC y Redirección a Google Maps</title>
 </head>
 <body>
-    <h1>Lector NFC y Geolocalización</h1>
+    <h1>Lector NFC y Redirección a Google Maps</h1>
     <button id="scanButton">Escanear NFC</button>
     <p id="output"></p>
 
@@ -16,25 +16,18 @@
             try {
                 const reader = new NDEFReader();
                 await reader.scan();
-                output.textContent = "Escaneando...";
+                output.textContent = "Escaneando NFC...";
 
                 reader.onreading = async event => {
-                    const message = event.message;
-                    let data = "";
-                    for (const record of message.records) {
-                        data += `Tipo: ${record.recordType}, Datos: ${record.data}\n`;
-                    }
-                    output.textContent = data;
-
                     // Obtener la ubicación en tiempo real
                     const position = await getLocation();
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
-                    output.textContent += `\nUbicación: Latitud ${latitude}, Longitud ${longitude}`;
+                    output.textContent = `Ubicación obtenida: Latitud ${latitude}, Longitud ${longitude}`;
 
-                    // Abrir Google Maps con la ubicación
+                    // Redireccionar a Google Maps con la ubicación
                     const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
-                    window.open(googleMapsUrl, '_blank'); // Abre en una nueva pestaña
+                    window.location.href = googleMapsUrl; // Redirecciona a Google Maps
                 };
             } catch (error) {
                 output.textContent = `Error: ${error.message}`;
