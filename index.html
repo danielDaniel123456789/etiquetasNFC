@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Obtener Ubicación Actual</title>
+</head>
+<body>
+  <h1>Obtener Ubicación</h1>
+  <a href="#" id="getLocation">Cargar mi ubicación</a>
+  <p id="location">Ubicación: No disponible</p>
+  <p><a id="mapsLink" href="#" target="_blank" style="display: none;">Abrir en Google Maps</a></p>
+
+  <script>
+    document.getElementById('getLocation').addEventListener('click', function (event) {
+      event.preventDefault();
+
+      // Verifica si el navegador soporta la API de geolocalización
+      if ('geolocation' in navigator) {
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+
+            const locationMessage = `Ubicación: Latitud ${latitude}, Longitud ${longitude}`;
+            
+            // Muestra la ubicación en el elemento del DOM
+            document.getElementById('location').textContent = locationMessage;
+
+            // Genera un enlace dinámico para abrir Google Maps
+            const mapsLink = document.getElementById('mapsLink');
+            mapsLink.href = `https://www.google.com/maps?q=${latitude},${longitude}`;
+            mapsLink.style.display = 'inline';
+            mapsLink.textContent = 'Abrir en Google Maps';
+
+            // Muestra un alert con la ubicación y el enlace
+            alert(`${locationMessage}\n\nAbrir en Google Maps: ${mapsLink.href}`);
+          },
+          (error) => {
+            const errorMessage = 'Error al obtener la ubicación';
+            document.getElementById('location').textContent = errorMessage;
+            alert(errorMessage);
+            console.error('Error al obtener la ubicación:', error);
+          }
+        );
+      } else {
+        const notSupportedMessage = 'La geolocalización no está soportada en este navegador.';
+        document.getElementById('location').textContent = notSupportedMessage;
+        alert(notSupportedMessage);
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lector NFC en HTML</title>
+</head>
+<body>
+    <h1>Lector NFC</h1>
+    <button id="scanButton">Escanear NFC</button>
+    <p id="output"></p>
+
+    <script>
+        const scanButton = document.getElementById('scanButton');
+        const output = document.getElementById('output');
+
+        scanButton.addEventListener('click', async () => {
+            try {
+                const reader = new NDEFReader();
+                await reader.scan();
+                output.textContent = "Escaneando...";
+
+                reader.onreading = event => {
+                    const message = event.message;
+                    let data = "";
+                    for (const record of message.records) {
+                        data += `Tipo: ${record.recordType}, Datos: ${record.data}\n`;
+                    }
+                    output.textContent = data;
+                };
+            } catch (error) {
+                output.textContent = `Error: ${error.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
