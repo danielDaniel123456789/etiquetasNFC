@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lector NFC y Geolocalización 2</title>
+    <title>Lector NFC y Geolocalización</title>
 </head>
 <body>
     <h1>Lector NFC y Geolocalización</h1>
@@ -28,13 +28,7 @@
 
                     // Obtener la ubicación en tiempo real
                     const position = await getLocation();
-                    const latitude = position.coords.latitude;
-                    const longitude = position.coords.longitude;
-                    output.textContent += `\nUbicación: Latitud ${latitude}, Longitud ${longitude}`;
-
-                    // Abrir Google Maps con la ubicación
-                    const googleMapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
-                    window.open(googleMapsUrl, '_blank'); // Abre en una nueva pestaña
+                    output.textContent += `\nUbicación: Latitud ${position.coords.latitude}, Longitud ${position.coords.longitude}`;
                 };
             } catch (error) {
                 output.textContent = `Error: ${error.message}`;
