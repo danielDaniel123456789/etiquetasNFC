@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lector NFC y Geolocalización</title>
+    <title>Lector NFC en HTML</title>
 </head>
 <body>
-    <h1>Lector NFC y Geolocalización</h1>
+    <h1>Lector NFC</h1>
     <button id="scanButton">Escanear NFC</button>
     <p id="output"></p>
 
@@ -18,32 +18,18 @@
                 await reader.scan();
                 output.textContent = "Escaneando...";
 
-                reader.onreading = async event => {
+                reader.onreading = event => {
                     const message = event.message;
                     let data = "";
                     for (const record of message.records) {
                         data += `Tipo: ${record.recordType}, Datos: ${record.data}\n`;
                     }
                     output.textContent = data;
-
-                    // Obtener la ubicación en tiempo real
-                    const position = await getLocation();
-                    output.textContent += `\nUbicación: Latitud ${position.coords.latitude}, Longitud ${position.coords.longitude}`;
                 };
             } catch (error) {
                 output.textContent = `Error: ${error.message}`;
             }
         });
-
-        function getLocation() {
-            return new Promise((resolve, reject) => {
-                if (!navigator.geolocation) {
-                    reject(new Error("Geolocalización no soportada por este navegador."));
-                } else {
-                    navigator.geolocation.getCurrentPosition(resolve, reject);
-                }
-            });
-        }
     </script>
 </body>
 </html>
