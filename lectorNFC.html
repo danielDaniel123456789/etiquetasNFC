@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Programar Etiqueta NFC con Ubicación Actual</title>
+    <title>Programar Etiqueta NFC con Ubicación en Tiempo Real rrr</title>
     <!-- Incluir Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -12,7 +12,7 @@
 
     <div class="container mt-5">
         <div class="card p-4 shadow-sm">
-            <h1 class="text-center mb-4">Programar Etiqueta NFC</h1>
+            <h1 class="text-center mb-4">Programar Etiqueta NFC ggggg</h1>
             <div class="text-center">
                 <button id="scanButton" class="btn btn-primary btn-lg">Programar Etiqueta NFC</button>
             </div>
@@ -33,30 +33,30 @@
                 output.classList.add('text-info');
 
                 reader.onreading = async event => {
-                    // Obtener la ubicación actual
+                    // Obtener la ubicación en tiempo real
                     const position = await getLocation();
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
 
-                    // Crear un mensaje NDEF con la ubicación actual
+                    // Crear un mensaje NDEF con la lógica deseada
                     const message = {
                         records: [
                             {
                                 recordType: "text",
-                                data: `Ubicación actual: Latitud ${latitude}, Longitud ${longitude}`
+                                data: "Obtener ubicación en tiempo real"
                             }
                         ]
                     };
 
-                    // Escribir el mensaje en la etiqueta NFC (esto borra los datos anteriores)
+                    // Escribir el mensaje en la etiqueta NFC
                     await reader.write(message);
 
-                    output.textContent = "Etiqueta NFC programada correctamente con la ubicación actual.";
+                    output.textContent = "Etiqueta NFC programada correctamente.";
                     output.classList.remove('text-info');
                     output.classList.add('text-success');
 
                     // Mostrar un alert
-                    alert("Etiqueta NFC programada. Ahora puedes acercar el celular para leer la ubicación actual.");
+                    alert("Etiqueta NFC programada. Ahora puedes acercar el celular para obtener la ubicación en tiempo real.");
                 };
             } catch (error) {
                 output.textContent = `Error: ${error.message}`;
@@ -65,7 +65,7 @@
             }
         });
 
-        // Función para obtener la ubicación actual
+        // Función para obtener la ubicación en tiempo real
         function getLocation() {
             return new Promise((resolve, reject) => {
                 if (!navigator.geolocation) {
@@ -83,13 +83,13 @@
                 await reader.scan();
 
                 reader.onreading = async event => {
-                    // Obtener la ubicación actual
+                    // Obtener la ubicación en tiempo real
                     const position = await getLocation();
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
 
                     // Mostrar la ubicación en el output
-                    output.textContent = `Ubicación actual: Latitud ${latitude}, Longitud ${longitude}`;
+                    output.textContent = `Ubicación en tiempo real: Latitud ${latitude}, Longitud ${longitude}`;
                     output.classList.remove('text-muted');
                     output.classList.add('text-info');
 
