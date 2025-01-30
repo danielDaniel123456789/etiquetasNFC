@@ -1,0 +1,50 @@
+Descripción del Proyecto:
+
+    El proyecto consiste en desarrollar un sistema en el que una persona lleva un collar con una etiqueta NFC incorporada. 
+Al acercar su celular a la etiqueta NFC, se activa automáticamente una URL en el dispositivo móvil. 
+    
+    Esta URL, al abrirse, realiza una solicitud a una API que, a su vez, envía una notificación a un grupo específico de Telegram. 
+El proceso es automático y permite una comunicación rápida y eficiente mediante la tecnología NFC
+En resumen, el flujo del sistema es el siguiente:
+
+El usuario acerca su celular a la etiqueta NFC.
+
+El lector NFC detecta la etiqueta y abre una URL predefinida en el navegador del celular.
+
+La URL activa una solicitud a una API (por ejemplo, un servidor web o un servicio en la nube).
+
+La API procesa la solicitud y envía una notificación a un grupo de Telegram mediante su API.
+
+Pregunta: ¿Es posible implementar este sistema?
+
+Respuesta:
+Sí, es posible implementar este sistema. A continuación, te explico cómo podrías hacerlo:
+
+Configuración del NFC:
+La etiqueta NFC debe estar programada para contener una URL específica. Cuando el celular la detecte, abrirá automáticamente esa URL en el navegador.
+
+Desarrollo de la API:
+La URL apuntará a un servidor o servicio web que tú desarrolles. Este servicio recibirá la solicitud y se encargará de enviar la notificación al grupo de Telegram utilizando la API de Telegram.
+
+Integración con Telegram:
+Deberás crear un bot de Telegram utilizando BotFather, obtener su token de acceso y añadirlo al grupo donde quieres que se envíen las notificaciones. Luego, tu API utilizará este token para enviar mensajes al grupo.
+
+Despliegue del Servicio:
+El servicio web puede estar alojado en la nube (por ejemplo, en Heroku, AWS o Google Cloud) o en un servidor local con acceso a Internet.
+
+Pruebas y Optimización:
+Una vez implementado, puedes probar el sistema acercando el celular a la etiqueta NFC y verificando que la notificación llegue correctamente al grupo de Telegram.
+
+Ejemplo de Flujo Técnico:
+
+URL en la etiqueta NFC: https://tuservicio.com/nfc-trigger
+
+Servicio Web: Recibe la solicitud en /nfc-trigger, procesa la información y envía un mensaje al grupo de Telegram mediante la API de Telegram.
+
+Notificación en Telegram: El grupo recibe un mensaje como: "¡Se ha detectado una aproximación de NFC!".
+
+Consideraciones Adicionales:
+
+Seguridad: Asegúrate de proteger tu API para evitar accesos no autorizados.
+
+Compatibilidad: Verifica que los dispositivos móviles sean compatibles con NFC y que estén correctamente configurados para abrir URLs automáticamente.
