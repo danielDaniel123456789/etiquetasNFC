@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lector NFC con Ubicación Actual</title>
+    <title>Lector NFC con Ubicación en Tiempo Real</title>
 </head>
 <body>
-    <h1>Lector NFC con Ubicación Actual 6</h1>
-    <button id="scanButton">Escanear NFC 6</button>
+    <h1>Lector NFC con Ubicación en Tiempo Real 66</h1>
+    <button id="scanButton">Activar Lector NFC 6</button>
     <p id="output"></p>
 
     <script>
@@ -16,32 +16,27 @@
             try {
                 const reader = new NDEFReader();
                 await reader.scan();
-                output.textContent = "Escaneando...";
+                output.textContent = "Lector NFC activado. Acerque el celular a una etiqueta NFC...";
 
                 reader.onreading = async event => {
-                    // Obtener la ubicación actual
+                    // Obtener la ubicación en tiempo real
                     const position = await getLocation();
                     const latitude = position.coords.latitude;
                     const longitude = position.coords.longitude;
 
                     // Mostrar la ubicación en el output
-                    output.textContent = `Ubicación actual: Latitud ${latitude}, Longitud ${longitude}`;
+                    output.textContent = `Ubicación en tiempo real: Latitud ${latitude}, Longitud ${longitude}`;
 
-                    // Enviar la ubicación a la etiqueta NFC (opcional)
-                    const message = {
-                        records: [
-                            { recordType: "text", data: `Ubicación: Latitud ${latitude}, Longitud ${longitude}` }
-                        ]
-                    };
-                    await reader.write(message); // Escribir en la etiqueta NFC
-                    output.textContent += "\nDatos escritos en la etiqueta NFC.";
+                    // Aquí puedes enviar la ubicación a un servidor, mostrarla en pantalla, etc.
+                    // Por ejemplo, enviar la ubicación a un servidor:
+                    await sendLocationToServer(latitude, longitude);
                 };
             } catch (error) {
                 output.textContent = `Error: ${error.message}`;
             }
         });
 
-        // Función para obtener la ubicación actual
+        // Función para obtener la ubicación en tiempo real
         function getLocation() {
             return new Promise((resolve, reject) => {
                 if (!navigator.geolocation) {
@@ -50,6 +45,34 @@
                     navigator.geolocation.getCurrentPosition(resolve, reject);
                 }
             });
+        }
+
+        // Función para enviar la ubicación a un servidor (opcional)
+        async function sendLocationToServer(latitude, longitude) {
+            const url = "https://tuservidor.com/api/ubicacion"; // Reemplaza con tu endpoint
+            const data = {
+                latitud: latitude,
+                longitud: longitude,
+                timestamp: new Date().toISOString()
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(data)
+                });
+
+                if (response.ok) {
+                    console.log("Ubicación enviada al servidor correctamente.");
+                } else {
+                    console.error("Error al enviar la ubicación al servidor.");
+                }
+            } catch (error) {
+                console.error("Error de red:", error);
+            }
         }
     </script>
 </body>
