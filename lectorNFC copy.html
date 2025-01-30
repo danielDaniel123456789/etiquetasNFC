@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Lector NFC en HTML</title>
+    <title>Lector NFC con Ubicación Actual</title>
 </head>
 <body>
-    <h1>Lector NFC</h1>
-    <button id="scanButton">Escanear NFC</button>
+    <h1>Lector NFC con Ubicación Actual 6</h1>
+    <button id="scanButton">Escanear NFC 6</button>
     <p id="output"></p>
 
     <script>
@@ -18,18 +18,39 @@
                 await reader.scan();
                 output.textContent = "Escaneando...";
 
-                reader.onreading = event => {
-                    const message = event.message;
-                    let data = "";
-                    for (const record of message.records) {
-                        data += `Tipo: ${record.recordType}, Datos: ${record.data}\n`;
-                    }
-                    output.textContent = data;
+                reader.onreading = async event => {
+                    // Obtener la ubicación actual
+                    const position = await getLocation();
+                    const latitude = position.coords.latitude;
+                    const longitude = position.coords.longitude;
+
+                    // Mostrar la ubicación en el output
+                    output.textContent = `Ubicación actual: Latitud ${latitude}, Longitud ${longitude}`;
+
+                    // Enviar la ubicación a la etiqueta NFC (opcional)
+                    const message = {
+                        records: [
+                            { recordType: "text", data: `Ubicación: Latitud ${latitude}, Longitud ${longitude}` }
+                        ]
+                    };
+                    await reader.write(message); // Escribir en la etiqueta NFC
+                    output.textContent += "\nDatos escritos en la etiqueta NFC.";
                 };
             } catch (error) {
                 output.textContent = `Error: ${error.message}`;
             }
         });
+
+        // Función para obtener la ubicación actual
+        function getLocation() {
+            return new Promise((resolve, reject) => {
+                if (!navigator.geolocation) {
+                    reject(new Error("Geolocalización no soportada por este navegador."));
+                } else {
+                    navigator.geolocation.getCurrentPosition(resolve, reject);
+                }
+            });
+        }
     </script>
 </body>
 </html>
