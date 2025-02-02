@@ -13,23 +13,21 @@
             event.preventDefault();
             
             const botToken = "7971542667:AAEfAPoo4z-Sjmz79l_IzafTcXCyoVDlS94";
-            const chatId = "7971542667"; // Reemplazar con el chat ID correcto
+            const chatId = "-7971542667"; // ID del bot como ejemplo, reemplazar con el correcto
             const message = "Hola, este es un mensaje de prueba desde el bot Prueba02";
             
-            fetch("sendMessage.php", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ botToken, chatId, message })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert("Mensaje enviado correctamente");
-                } else {
-                    alert("Error al enviar el mensaje");
-                }
-            })
-            .catch(error => console.error("Error:", error));
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
+            
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.ok) {
+                        alert("Mensaje enviado correctamente");
+                    } else {
+                        alert("Error al enviar el mensaje");
+                    }
+                })
+                .catch(error => console.error("Error:", error));
         });
     </script>
 </body>
