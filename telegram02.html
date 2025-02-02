@@ -6,28 +6,51 @@
     <title>Enviar Mensaje a Telegram</title>
 </head>
 <body>
-    <a href="#" id="sendMessage">Enviar mensaje a Telegram ttt</a>
+    <h1>Enviar Mensaje a Grupo de Telegram 44</h1>
+    <form id="messageForm">
+        <label for="chatId">ID del Grupo:</label>
+        <input type="text" id="chatId" name="chatId" required>
+        <br><br>
+        <label for="message">Mensaje:</label>
+        <textarea id="message" name="message" rows="4" cols="50" required></textarea>
+        <br><br>
+        <button type="submit">Enviar Mensaje</button>
+    </form>
 
     <script>
-        document.getElementById("sendMessage").addEventListener("click", function(event) {
+        document.getElementById('messageForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            
-            const botToken = "7971542667:AAEfAPoo4z-Sjmz79l_IzafTcXCyoVDlS94";
-            const chatId = "-7971542667"; // ID del bot como ejemplo, reemplazar con el correcto
-            const message = "Hola, este es un mensaje de prueba desde el bot Prueba02";
-            
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(message)}`;
-            
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    if (data.ok) {
-                        alert("Mensaje enviado correctamente");
-                    } else {
-                        alert("Error al enviar el mensaje");
-                    }
-                })
-                .catch(error => console.error("Error:", error));
+
+            const botToken = '7971542667:AAEfAPoo4z-Sjmz79l_IzafTcXCyoVDlS94';
+            const chatId = document.getElementById('chatId').value;
+            const message = document.getElementById('message').value;
+
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage`;
+
+            const data = {
+                chat_id: chatId,
+                text: message
+            };
+
+            fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.ok) {
+                    alert('Mensaje enviado con éxito!');
+                } else {
+                    alert('Error al enviar el mensaje: ' + result.description);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error al enviar el mensaje');
+            });
         });
     </script>
 </body>
