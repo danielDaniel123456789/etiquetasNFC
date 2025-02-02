@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enviar Mensaje a Telegram</title>
+</head>
+<body>
+    <h1>Enviar Mensaje a Telegram</h1>
+    <button id="enviarMensaje">Enviar "Hola Mundo"</button>
+
+    <script>
+        // Token del bot y ID correcto del grupo
+        const token = '8049283433:AAFHNZo_zM22quWsZc8q9a52olhsLTBaUxk'; 
+        const chatId = '-1004785827590'; // Usa el ID correcto
+
+        function enviarMensaje() {
+            const message = 'Hola Mundo';
+            const url = `https://api.telegram.org/bot${token}/sendMessage`;
+
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: chatId,
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert('Mensaje enviado correctamente!');
+                } else {
+                    alert(`Error: ${data.description}`);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Hubo un error al enviar el mensaje.');
+            });
+        }
+
+        document.getElementById('enviarMensaje').addEventListener('click', enviarMensaje);
+    </script>
+</body
